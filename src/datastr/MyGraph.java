@@ -68,7 +68,39 @@ public class MyGraph<T> {
 		elementCounter++;
 	}
 	
-	public void addEdge(int indexOfVertice, float weight) {
+	public void addEdge(T elementFrom, T elementTo, float edgeWeight) throws Exception {
+		if(elementFrom == null || elementTo == null || edgeWeight <= 0) {
+			throw (new Exception("Incorrect arguments"));
+		}
 		
+		int indexOfElementFrom = searchVertice(elementFrom);
+		int indexOfElementTo = searchVertice(elementTo);
+		
+		if(indexOfElementFrom == -1 || indexOfElementTo == -1) {
+			throw (new Exception("One or both vertices not in graph"));
+		}
+		
+		MyEdgeNode newNode = new MyEdgeNode(indexOfElementTo, edgeWeight);
+		
+		if(graphElements[indexOfElementFrom].getFirstEdge() == null) {
+			graphElements[indexOfElementFrom].setFirstEdge(newNode);
+		}
+		else {
+			MyEdgeNode temp = graphElements[indexOfElementFrom].getFirstEdge();
+			while(temp.getNext() != null) {
+				temp = temp.getNext();
+			}
+			temp.setNext(newNode);
+		}
+		
+	}
+	
+	private int searchVertice(T element) {
+		for(int i = 0; 1 < elementCounter; i++) {
+			if(graphElements[i].getElement().equals(element)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }
