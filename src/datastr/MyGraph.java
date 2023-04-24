@@ -103,4 +103,22 @@ public class MyGraph<T> {
 		}
 		return -1;
 	}
+	
+	public void print() throws Exception {
+		if(isEmpty()) {
+			throw (new Exception("Graph empty"));
+		}
+		else {
+			for(int i = 0; i < arraySize; i++) {
+				System.out.print(graphElements[i].getElement() + "--->");
+				MyEdgeNode temp = graphElements[i].getFirstEdge();
+				while(temp != null) {
+					T verticeTo = (T) graphElements[temp.getIndexOfVertice()].getElement();
+					System.out.print(verticeTo + "(" + temp.getWeight() + "km); ");
+					temp = temp.getNext();
+				}
+				System.out.println();
+			}
+		}
+	}
 }
